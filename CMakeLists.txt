@@ -14,6 +14,7 @@ tanja84dk_generate_license_begin()
 set(${PROJECT_NAME}_SOURCES
     src/main.cpp
     src/dns_thing.cpp
+    src/tools.cpp
     src/license.cpp
     src/license_helper.h
 )
