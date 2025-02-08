@@ -3,6 +3,8 @@
 #include <fmt/core.h>
 #include <tanja84dk/classes.h>
 
+#include <fstream>
+#include <iostream>
 #include <map>
 #include <string>
 
@@ -45,4 +47,19 @@ std::string Tanja84dk::gen_rev(uint8_t& digit, Tanja84dk::IP_Address& IP_Obj, co
     }
     return fmt::format("{0}{1}IN      PTR     {2}-{0}.dyn.{3}.", digit, std::string(padding, ' '), ip_network_str,
                        domain);
+}
+
+std::map<int, std::string> Tanja84dk::read_input_file(const std::string& filename) noexcept {
+    std::map<int, std::string> output;
+
+    int key = {};
+    std::string value = {};
+
+    std::ifstream fh(filename);
+
+    while (fh >> key >> value) {
+        output[key] = value;
+    }
+    fh.close();
+    return output;
 }
