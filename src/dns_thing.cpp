@@ -63,3 +63,9 @@ std::map<int, std::string> Tanja84dk::read_input_file(const std::string& filenam
     fh.close();
     return output;
 }
+
+std::string Tanja84dk::right_align_header(std::string& data) {
+    int data_length = data.length();
+    int start_point = 33 - data_length;
+    return fmt::format("{}{}", std::string(start_point, ' '), data);
+}

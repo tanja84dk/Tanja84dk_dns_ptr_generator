@@ -14,11 +14,7 @@ std::string gen_rev(uint8_t& digit, Tanja84dk::IP_Address& IP_Obj, const std::st
 
 std::map<int, std::string> read_input_file(const std::string& filename) noexcept;
 
-std::string right_align_header(std::string& data) {
-    int data_length = data.length();
-    int start_point = 33 - data_length;
-    return fmt::format("{}{}", std::string(start_point, ' '), data);
-}
+std::string right_align_header(std::string& data);
 
 }  // namespace Tanja84dk
 
