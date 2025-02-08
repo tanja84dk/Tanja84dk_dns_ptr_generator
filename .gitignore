@@ -1,0 +1,10 @@
+[Bb]uild/
+[Oo]ut/
+*.bak
+*.tmp
+*.sh
+.vscode/
+.vs/
+*.list
+*.in-addr.arpa
+tanja84dk_*_licenses_macro.h.in
