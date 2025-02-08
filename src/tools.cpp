@@ -1,6 +1,7 @@
 #include "tanja84dk/tools.h"
 
 #include <algorithm>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -16,4 +17,15 @@ void Tanja84dk::save_file(const std::string& filename, const std::vector<std::st
     std::ostream_iterator<std::string> output_iterator(fh, "\n");
     std::copy(std::begin(vector_data), std::end(vector_data), output_iterator);
     fh.close();
+}
+
+int Tanja84dk::get_date_stamp() noexcept {
+    time_t timestamp;
+    char output[10];
+    struct tm* datetime;
+    time(&timestamp);
+    datetime = localtime(&timestamp);
+    strftime(output, 10, "%Y%m%d", datetime);
+    std::string data = output;
+    return std::stoi(data);
 }
