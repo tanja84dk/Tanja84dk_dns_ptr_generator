@@ -4,7 +4,6 @@
 
 #include <algorithm>
 #include <ctime>
-#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -14,7 +13,7 @@
 #include <vector>
 
 namespace Tanja84dk {
-bool file_exist(const std::string& filename) noexcept { return std::filesystem::exists(filename); }
+bool file_exist(const std::string& filename) noexcept;
 
 void save_file(const std::string& filename, const std::vector<std::string>& vector_data) noexcept {
     std::ofstream fh(filename);
