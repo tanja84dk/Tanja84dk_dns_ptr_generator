@@ -27,7 +27,7 @@ std::string Tanja84dk::gen_ip_network_name(const std::string& ip_as_0_range) noe
     return return_data;
 }
 
-std::string gen_rev(uint8_t& digit, Tanja84dk::IP_Address& IP_Obj, const std::string& domain) noexcept {
+std::string Tanja84dk::gen_rev(uint8_t& digit, Tanja84dk::IP_Address& IP_Obj, const std::string& domain) noexcept {
     int digit_length = std::to_string(digit).length();
     int padding = 8 - digit_length;
     std::string ip_network_str =
