@@ -13,6 +13,7 @@ tanja84dk_generate_license_begin()
 
 set(${PROJECT_NAME}_SOURCES
     src/main.cpp
+    src/calc_ip.cpp
     src/dns_thing.cpp
     src/tools.cpp
     src/license.cpp
@@ -20,6 +21,7 @@ set(${PROJECT_NAME}_SOURCES
 )
 
 set(${PROJECT_NAME}_HEADERS
+    include/tanja84dk/calc_ip.h
     include/tanja84dk/classes.h
     include/tanja84dk/dns_thing.h
     include/tanja84dk/license.h
