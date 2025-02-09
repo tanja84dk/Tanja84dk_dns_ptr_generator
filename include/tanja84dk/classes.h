@@ -1,8 +1,14 @@
 #ifndef TANJA84DK_DNSGEN_CLASSES_H
 #define TANJA84DK_DNSGEN_CLASSES_H
 #include <fmt/core.h>
+#include <tanja84dk/calc_ip.h>
 
+#include <array>
+#include <bitset>
+#include <iomanip>
+#include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 
 namespace Tanja84dk {
@@ -13,6 +19,8 @@ class IP_Address {
     std::string _second = {};
     std::string _third = {};
     std::string _fourth = {};
+
+    std::array<std::bitset<8>, 4> _binary_array;
 
     void _clear_impl() noexcept {
         this->_first.clear();
@@ -43,6 +51,11 @@ class IP_Address {
                 this->_fourth.append(buffer);
             }
         }
+
+        this->_binary_array[0] = Tanja84dk::Calc_IP::int_to_8bit(std::stoi(this->_first));
+        this->_binary_array[1] = Tanja84dk::Calc_IP::int_to_8bit(std::stoi(this->_second));
+        this->_binary_array[2] = Tanja84dk::Calc_IP::int_to_8bit(std::stoi(this->_third));
+        this->_binary_array[3] = Tanja84dk::Calc_IP::int_to_8bit(std::stoi(this->_fourth));
     }
 
    public:
@@ -57,6 +70,32 @@ class IP_Address {
 
     const std::string get_full_test() noexcept {
         return fmt::format("{}.{}.{}.{}", this->get_first(), this->get_second(), this->get_third(), this->get_fourth());
+    }
+
+    void print_as_binary_str() noexcept {
+        std::string output_str = "";
+
+        for (int i = 0; i < this->_binary_array.size(); i++) {
+            std::bitset<8> binary = this->_binary_array[i];
+            output_str.append(binary.to_string<char, std::char_traits<char>, std::allocator<char> >());
+            if (i != this->_binary_array.size()) {
+                output_str.append(" ");
+            }
+        }
+        fmt::print("{}\n", output_str);
+    }
+
+    void print_as_hex() noexcept {
+        std::stringstream output_value = {};
+        // output_value << "0x ";
+        for (int i = 0; i < this->_binary_array.size(); i++) {
+            output_value << std::hex << std::setfill('0') << std::setw(2) << this->_binary_array[i].to_ulong();
+
+            if (i < (this->_binary_array.size() - 1)) {
+                output_value << ' ';
+            }
+        }
+        fmt::print("{}\n", output_value.str());
     }
 };
 
