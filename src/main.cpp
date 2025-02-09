@@ -1,4 +1,5 @@
 #include <fmt/core.h>
+#include <tanja84dk/calc_ip.h>
 #include <tanja84dk/classes.h>
 #include <tanja84dk/dns_thing.h>
 #include <tanja84dk/license.h>
@@ -69,9 +70,9 @@ int main(int argc, char** argv) {
     }
 
     std::string rev_network =
-        fmt::format("{}.{}.{}", Ip_Address_Obj.get_third(), Ip_Address_Obj.get_second(), Ip_Address_Obj.get_first());
+        fmt::format("{0}.{1}.{2}", Ip_Address_Obj.get_third(), Ip_Address_Obj.get_second(), Ip_Address_Obj.get_first());
 
-    std::string output_file_name = fmt::format("/buildtest/Cpp-Tanja84dk-DnsSync/pri.{}.in-addr.arpa", rev_network);
+    std::string output_file_name = fmt::format("/buildtest/Cpp-Tanja84dk-DnsSync/pri.{0}.in-addr.arpa", rev_network);
 
     Tanja84dk::save_file(output_file_name, header);
 
