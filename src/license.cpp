@@ -1,10 +1,11 @@
+#include "tanja84dk/license.h"
+
 #include <fmt/core.h>
-#include <tanja84dk/license.h>
-#include <tanja84dk_licenses_macro.h>
 
 #include <string>
 
 #include "license_helper.h"
+#include "tanja84dk_licenses_macro.h"
 
 using namespace Tanja84dk;
 /**
