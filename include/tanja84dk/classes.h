@@ -87,15 +87,15 @@ class IP_Address {
 
     void print_as_hex() noexcept {
         std::stringstream output_value = {};
-        // output_value << "0x ";
+        output_value << "0x";
         for (int i = 0; i < this->_binary_array.size(); i++) {
             output_value << std::hex << std::setfill('0') << std::setw(2) << this->_binary_array[i].to_ulong();
 
-            if (i < (this->_binary_array.size() - 1)) {
-                output_value << ' ';
-            }
+            // if (i < (this->_binary_array.size() - 1)) {
+            //     output_value << ' ';
+            // }
         }
-        fmt::print("{}\n", output_value.str());
+        fmt::print("{0}\n", output_value.str());
     }
 };
 
