@@ -5,6 +5,7 @@
 #include <tanja84dk/license.h>
 #include <tanja84dk/tools.h>
 
+#include <argparse/argparse.hpp>
 #include <ctime>
 #include <filesystem>
 #include <fstream>
@@ -15,6 +16,22 @@
 #include <vector>
 
 int main(int argc, char** argv) {
+    argparse::ArgumentParser parser("Tanja84dk_dns_ptr_generator");
+    parser.add_argument("--license").help("Shows the licenses").default_value(false).implicit_value(true);
+
+    try {
+        parser.parse_args(argc, argv);
+    } catch (const std::exception& err) {
+        std::cerr << err.what() << std::endl;
+        std::cerr << parser;
+        return EXIT_FAILURE;
+    }
+
+    if (parser["--license"] == true) {
+        Tanja84dk::license::print_all_licenses();
+        return EXIT_SUCCESS;
+    }
+
     std::vector<std::string> header;
     std::string ip_network_dns_name;
 
@@ -24,10 +41,6 @@ int main(int argc, char** argv) {
 
     if (argv[1] == std::string("-h") or argv[1] == std::string("--help")) {
         fmt::print("This is the help\n");
-        return EXIT_SUCCESS;
-    }
-    if (argv[1] == std::string("--license")) {
-        Tanja84dk::license::print_all_licenses();
         return EXIT_SUCCESS;
     }
 
