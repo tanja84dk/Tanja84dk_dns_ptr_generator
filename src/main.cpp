@@ -15,9 +15,18 @@
 #include <string>
 #include <vector>
 
+struct Parsed_Args {
+    std::string network = "";
+    std::string domain = "";
+    /* data */
+};
+
 int main(int argc, char** argv) {
+    Parsed_Args Parsed_Arguments;
     argparse::ArgumentParser parser("Tanja84dk_dns_ptr_generator");
     parser.add_argument("--license").help("Shows the licenses").default_value(false).implicit_value(true);
+    parser.add_argument("--network").store_into(Parsed_Arguments.network);
+    parser.add_argument("--domain").store_into(Parsed_Arguments.domain);
 
     try {
         parser.parse_args(argc, argv);
@@ -31,6 +40,18 @@ int main(int argc, char** argv) {
         Tanja84dk::license::print_all_licenses();
         return EXIT_SUCCESS;
     }
+
+    if (Parsed_Arguments.network.size() <= 0) {
+        fmt::print("Networking is not set\n");
+        return EXIT_FAILURE;
+    }
+
+    if (Parsed_Arguments.domain.size() <= 0) {
+        fmt::print("Domain is not set\n");
+        return EXIT_FAILURE;
+    }
+
+    return 0;
 
     std::vector<std::string> header;
     std::string ip_network_dns_name;
