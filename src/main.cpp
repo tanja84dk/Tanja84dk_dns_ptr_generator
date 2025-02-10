@@ -60,11 +60,6 @@ int main(int argc, char** argv) {
     std::string domain = {};
     std::string network_name = {};
 
-    if (argv[1] == std::string("-h") or argv[1] == std::string("--help")) {
-        fmt::print("This is the help\n");
-        return EXIT_SUCCESS;
-    }
-
     if (argc > 1) {
         network_name = argv[1];
         file_name = network_name + ".list";
