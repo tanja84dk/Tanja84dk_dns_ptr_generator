@@ -33,13 +33,16 @@ set(${PROJECT_NAME}_INTERNAL_HEADERS
 )
 
 set(${PROJECT_NAME}_LIBRARIES
+    argparse
     fmt
 )
 
 find_package(fmt REQUIRED)
+find_package(argparse)
 
 tanja84dk_generate_license_manual(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
 tanja84dk_generate_license_manual(fmt ${fmt_SOURCE_DIR}/LICENSE)
+tanja84dk_generate_license_manual(argparse ${argparse_SOURCE_DIR}/LICENSE)
 
 tanja84dk_generate_license_end()
 
