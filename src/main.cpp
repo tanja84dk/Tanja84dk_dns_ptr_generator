@@ -18,15 +18,40 @@
 struct Parsed_Args {
     std::string network = "";
     std::string domain = "";
+    std::string list_filename = "";
     /* data */
 };
 
 int main(int argc, char** argv) {
     Parsed_Args Parsed_Arguments;
-    argparse::ArgumentParser parser("Tanja84dk_dns_ptr_generator");
-    parser.add_argument("--license").help("Shows the licenses").default_value(false).implicit_value(true);
-    parser.add_argument("--network").required().store_into(Parsed_Arguments.network).metavar("NETWORK_ADDRESS");
-    parser.add_argument("--domain").required().store_into(Parsed_Arguments.domain).metavar("DOMAIN");
+    argparse::ArgumentParser parser("Tanja84dk_dns_ptr_generator", "0.1.0");
+    parser.add_argument("-l", "--license")
+        .action([&](const auto& /*unused*/) {
+            Tanja84dk::license::print_all_licenses();
+            std::exit(0);
+        })
+        .help("Shows the licenses")
+        .default_value(false)
+        .implicit_value(true)
+        .nargs(0);
+    parser.add_argument("-n", "--network")
+        .required()
+        .store_into(Parsed_Arguments.network)
+        .metavar("NETWORK_ADDRESS")
+        .help("This is the network address as a /24 without the /24.\nSo as example --network 10.10.10.0");
+    parser.add_argument("-d", "--domain")
+        .required()
+        .store_into(Parsed_Arguments.domain)
+        .metavar("DOMAIN")
+        .help("The domain/subdomain the rdns/ptr zone is for");
+    parser.add_argument("-f", "--list-file")
+        .store_into(Parsed_Arguments.list_filename)
+        .metavar("FILENAME")
+        .help(
+            "Optional list file for ip and hostname.\n"
+            "If hostname ends with a . then it's seen as a fqdn address and else its adding the domain.\n"
+            "Default filename it looks for is network address with the extention .list\n"
+            "So an example 10.10.10.0.list and if none are given then it's just generating ptr based on ip and domain");
 
     try {
         parser.parse_args(argc, argv);
@@ -36,25 +61,27 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    if (parser["--license"] == true) {
-        Tanja84dk::license::print_all_licenses();
-        return EXIT_SUCCESS;
-    }
-
     if (Parsed_Arguments.network.size() <= 0) {
         fmt::print("Networking is not set\n");
+        std::cerr << parser;
         return EXIT_FAILURE;
     }
 
     if (Parsed_Arguments.domain.size() <= 0) {
         fmt::print("Domain is not set\n");
+        std::cerr << parser;
         return EXIT_FAILURE;
     }
 
     std::vector<std::string> header;
     std::string ip_network_dns_name;
+    std::string file_name = "";
 
-    std::string file_name = Parsed_Arguments.network + ".list";
+    if (Parsed_Arguments.list_filename.size() <= 0) {
+        file_name = Parsed_Arguments.network + ".list";
+    } else {
+        file_name = Parsed_Arguments.list_filename;
+    }
     std::string domain = Parsed_Arguments.domain;
 
     Tanja84dk::IP_Address Ip_Address_Obj(Parsed_Arguments.network);
