@@ -25,8 +25,8 @@ int main(int argc, char** argv) {
     Parsed_Args Parsed_Arguments;
     argparse::ArgumentParser parser("Tanja84dk_dns_ptr_generator");
     parser.add_argument("--license").help("Shows the licenses").default_value(false).implicit_value(true);
-    parser.add_argument("--network").store_into(Parsed_Arguments.network);
-    parser.add_argument("--domain").store_into(Parsed_Arguments.domain);
+    parser.add_argument("--network").required().store_into(Parsed_Arguments.network).metavar("NETWORK_ADDRESS");
+    parser.add_argument("--domain").required().store_into(Parsed_Arguments.domain).metavar("DOMAIN");
 
     try {
         parser.parse_args(argc, argv);
@@ -51,25 +51,13 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    return 0;
-
     std::vector<std::string> header;
     std::string ip_network_dns_name;
 
-    std::string file_name = {};
-    std::string domain = {};
-    std::string network_name = {};
+    std::string file_name = Parsed_Arguments.network + ".list";
+    std::string domain = Parsed_Arguments.domain;
 
-    if (argc > 1) {
-        network_name = argv[1];
-        file_name = network_name + ".list";
-        domain = argv[2];
-    } else {
-        network_name = "192.168.1.0";
-        file_name = network_name + ".list";
-        domain = "example.com";
-    }
-    Tanja84dk::IP_Address Ip_Address_Obj(network_name);
+    Tanja84dk::IP_Address Ip_Address_Obj(Parsed_Arguments.network);
 
     if (Tanja84dk::file_exist(file_name)) {
         Ip_Address_Obj.host_list = Tanja84dk::read_input_file(file_name);
