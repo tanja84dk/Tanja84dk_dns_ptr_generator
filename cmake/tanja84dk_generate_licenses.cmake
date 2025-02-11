@@ -48,6 +48,6 @@ endfunction(tanja84dk_generate_license_manual)
 
 function(tanja84dk_generate_license_end)
     file(APPEND "${${PROJECT_NAME}_LICENSES_MACRO_FILE}"
-    "\n#endif // TANJA84DK_DOCKERLIB_LICENCES_MACRO_H\n")
+    "\n#endif // ${${PROJECT_NAME}_MACRO_NAME}_LICENCES_MACRO_H\n")
 endfunction(tanja84dk_generate_license_end)
 
