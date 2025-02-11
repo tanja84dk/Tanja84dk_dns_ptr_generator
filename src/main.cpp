@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
     header.push_back(Tanja84dk::right_align_header(expire) + "         ; Expire");
     header.push_back(Tanja84dk::right_align_header(negative_cache_ttl) + " )       ; Negative Cache TTL\n;");
     header.push_back(fmt::format("{0}       IN      NS      {1}.", "@", nameserver));
-    for (uint8_t i = 0; i <= 255; i++) {
+    for (uint8_t i = 0; i < 255; i++) {
         header.push_back(gen_rev(i, Ip_Address_Obj, domain));
     }
 
