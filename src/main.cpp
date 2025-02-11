@@ -122,5 +122,10 @@ int main(int argc, char** argv) {
 
     Tanja84dk::save_file(output_file_name, header);
 
+    std::string named_conf_settings = "zone \"" + rev_network + ".in-addr.arpa\" {\n\ttype master;\n\tfile \"pri." +
+                                      rev_network + ".in-addr.arpa\";\n};";
+
+    fmt::print("This is the settings for named.conf.local\n{0}\n", named_conf_settings);
+
     return 0;
 }
