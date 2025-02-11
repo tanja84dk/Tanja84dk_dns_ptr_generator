@@ -38,7 +38,9 @@ int main(int argc, char** argv) {
         .required()
         .store_into(Parsed_Arguments.network)
         .metavar("NETWORK_ADDRESS")
-        .help("This is the network address as a /24 without the /24.\nSo as example --network 10.10.10.0");
+        .help(
+            "This is the network address as a /24 without the /24.\n"
+            "So as example --network 10.10.10.0");
     parser.add_argument("-d", "--domain")
         .required()
         .store_into(Parsed_Arguments.domain)
